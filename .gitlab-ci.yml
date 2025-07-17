@@ -11,8 +11,6 @@ update_blacklist:
   stage: update
 
   before_script:
-    - apt update
-    - apt install -y grepcidr git curl
     - git config --global user.email "ci@synapsecom.gr"
     - git config --global user.name "CI"
     - git config --global --add safe.directory "$CI_PROJECT_DIR"
