@@ -11,9 +11,10 @@ update_blacklist:
   stage: update
 
   before_script:
-    - git config --global user.email "ci@synapsecom.gr"
-    - git config --global user.name "CI"
-    - git config --global --add safe.directory "$CI_PROJECT_DIR"
+    - git config user.name "Aggregator"
+    - git config user.email "bl-aggregator@synapsecom.gr"
+    - git config --add safe.directory "$CI_PROJECT_DIR"
+    - git remote set-url origin "https://${GIT_REPO_TOKEN_NAME}:${GIT_REPO_TOKEN_VALUE}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
     - chmod +x aggregator.sh optimizer.sh collapser.py
   script:
     - ./aggregator.sh
@@ -22,8 +23,8 @@ update_blacklist:
         echo "No changes"
       else
         git add blacklist.lst
-        git commit -m "🤖 Update aggregated blacklist $(date -u +'%Y-%m-%d %H:%M:%S') [skip ci]"
-        git push "https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" "HEAD:${CI_COMMIT_REF_NAME}"
+        git commit -m "🤖 [${CI_PIPELINE_ID}]-[${CI_JOB_ID}] Update aggregated blacklist $(date -u +'%Y-%m-%d %H:%M:%S')"
+        git push -o ci.skip
       fi
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
