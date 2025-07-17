@@ -3,8 +3,6 @@ stages:
   - update
 
 variables:
-  GIT_STRATEGY: fetch    # quicker than full clone
-  GIT_DEPTH: 1           # shallow fetch
   DEBIAN_FRONTEND: noninteractive
 
 update_blacklist:
