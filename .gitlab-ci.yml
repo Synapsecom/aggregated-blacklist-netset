@@ -13,7 +13,7 @@ update_blacklist:
     - git checkout -b main || true
     - git config pull.rebase false || true
     - git switch main
-    - git pull origin main
+    - git pull origin main --allow-unrelated-histories
     - git config user.name "Aggregator"
     - git config user.email "bl-aggregator@synapsecom.gr"
     - git config --add safe.directory "$CI_PROJECT_DIR"
