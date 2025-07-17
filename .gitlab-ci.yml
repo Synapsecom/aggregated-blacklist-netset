@@ -1,16 +1,33 @@
-# You can override the included template(s) by including variable overrides
-# SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
-# Secret Detection customization: https://docs.gitlab.com/user/application_security/secret_detection/pipeline/configure
-# Dependency Scanning customization: https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-the-dependency-scanning-settings
-# Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
-# Note that environment variables can be set in several places
-# See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
+---
 stages:
-- test
-- secret-detection
+  - update
+
 variables:
-  SECRET_DETECTION_ENABLED: 'true'
-secret_detection:
-  stage: secret-detection
-include:
-- template: Security/Secret-Detection.gitlab-ci.yml
+  GIT_STRATEGY: fetch    # quicker than full clone
+  GIT_DEPTH: 1           # shallow fetch
+  DEBIAN_FRONTEND: noninteractive
+
+update_blacklist:
+  stage: update
+
+  before_script:
+    - apt update
+    - apt install -y grepcidr git curl
+    - git config --global user.email "ci@synapsecom.gr"
+    - git config --global user.name "CI"
+    - git config --global --add safe.directory "$CI_PROJECT_DIR"
+    - chmod +x aggregator.sh optimizer.sh collapser.py
+  script:
+    - ./aggregator.sh
+    - |
+      if git diff --quiet --exit-code blacklist.lst; then
+        echo "No changes"
+      else
+        git add blacklist.lst
+        git commit -m "🤖 Update aggregated blacklist $(date -u +'%Y-%m-%d %H:%M:%S') [skip ci]"
+        git push "https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" "HEAD:${CI_COMMIT_REF_NAME}"
+      fi
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: on_success
+    - when: manual
