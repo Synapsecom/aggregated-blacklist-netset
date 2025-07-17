@@ -11,6 +11,7 @@ declare -Ar netset_sources=(
     ["emergingthreats-compromised-ips"]="https://rules.emergingthreats.net/blockrules/compromised-ips.txt"
     ["cinsscore-ci-badguys"]="http://cinsscore.com/list/ci-badguys.txt"
     ["blocklist-de-all"]="https://lists.blocklist.de/lists/all.txt"
+    ["hagezi-threat-intelligence-feeds"]="https://raw.githubusercontent.com/hagezi/dns-blocklists/main/ips/tif.txt"
 )
 
 function cleanup() {
