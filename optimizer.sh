@@ -3,24 +3,24 @@
 
 declare -r s_dir="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
-declare -r ipset_file_excludes=$(mktemp)
-declare -r ipset_file_input="${1}"
-declare -r ipset_file_output="${2}"
+declare -r netset_file_excludes=$(mktemp)
+declare -r netset_file_input="${1}"
+declare -r netset_file_output="${2}"
 
 function cleanup() {
-    rm -rf -- "${ipset_file_excludes}" "${s_dir}/debug.lst"
+    rm -rf -- "${netset_file_excludes}" "${s_dir}/debug.lst"
 }
 
 # Trap most common termination signals plus EXIT (0) and ERR
 # trap cleanup EXIT ERR INT TERM HUP QUIT PIPE
 
-! [ -n "${ipset_file_input}" ] && {
-    echo "[ERROR] [optimizer] Input IPset file is not defined." >&2
+! [ -n "${netset_file_input}" ] && {
+    echo "[ERROR] [optimizer] Input netset file is not defined." >&2
     exit 1
 }
 
-! [ -f "${ipset_file_input}" ] && {
-    echo "[ERROR] [optimizer] No such file '${ipset_file_input}'." >&2
+! [ -f "${netset_file_input}" ] && {
+    echo "[ERROR] [optimizer] No such file '${netset_file_input}'." >&2
     exit 2
 }
 
@@ -31,13 +31,13 @@ for cmd in grepcidr python3; do
     }
 done
 
-! touch "${ipset_file_output}" &>/dev/null && {
-    echo "[ERROR] [optimizer] Cannot create file '${ipset_file_output}'. Parent directories may be missing." >&2
+! touch "${netset_file_output}" &>/dev/null && {
+    echo "[ERROR] [optimizer] Cannot create file '${netset_file_output}'. Parent directories may be missing." >&2
     exit 4
 }
 
 # CIDRs to exclude (RFC 6890 + multicast + docs)
-read -r -d '' ipset_excludes <<'EOF'
+read -r -d '' netset_excludes <<'EOF'
 0.0.0.0/8
 10.0.0.0/8
 100.64.0.0/10
@@ -63,19 +63,19 @@ ff00::/8
 EOF
 
 # Save the exclusion set to a temp file for grepcidr
-printf '%s\n' "${ipset_excludes}" | grep -v '^#' > "${ipset_file_excludes}"
+printf '%s\n' "${netset_excludes}" | grep -v '^#' > "${netset_file_excludes}"
 
 # 1. Strip comments/blank lines
 # 2. Remove all excluded networks
 # 3. Deduplicate
 # 4. Collapse with aggregate
-grep -Ev '^\s*(#|$)' "${ipset_file_input}" \
-    | grepcidr -v -f "${ipset_file_excludes}" \
+grep -Ev '^\s*(#|$)' "${netset_file_input}" \
+    | grepcidr -v -f "${netset_file_excludes}" \
     | sort -u \
     | awk 'index($0,"/")==0 { if ($0 ~ /:/) print $0"/128"; else print $0"/32"; next } {print}' \
     | tee "${s_dir}/debug.lst" \
     | python3 "${s_dir}/collapser.py" \
-    > "${ipset_file_output}"
+    > "${netset_file_output}"
 
 # Results
-echo "[INFO] [optimizer] Clean and aggregated blacklist IPset written to '${ipset_file_output}'. Includes '$(wc -l "${ipset_file_output}" | awk '{print $1}')' unique entries."
+echo "[INFO] [optimizer] Clean and aggregated blacklist netset written to '${netset_file_output}'. Includes '$(wc -l "${netset_file_output}" | awk '{print $1}')' unique entries."

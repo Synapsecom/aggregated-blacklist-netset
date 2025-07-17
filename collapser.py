@@ -5,7 +5,7 @@
 collapser.py - Collapse & deduplicate IPv4/IPv6 prefixes.
 
 Usage:
-    python3 collapse_ipset.py  [-i INPUT] [-o OUTPUT]
+    python3 collapser.py  [-i INPUT] [-o OUTPUT]
 
 If -i/--input is omitted, reads from STDIN.
 If -o/--output is omitted, writes to STDOUT.
