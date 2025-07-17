@@ -1,6 +1,6 @@
 # Aggregated Blacklist Netset
 
-Aggregated blocklist from different providers in a single netset, refreshed every 30 minutes.
+Aggregated blacklist from different providers in a single netset, refreshed every 30 minutes.
 
 ## Sources
 
