@@ -12,7 +12,7 @@ function cleanup() {
 }
 
 # Trap most common termination signals plus EXIT (0) and ERR
-# trap cleanup EXIT ERR INT TERM HUP QUIT PIPE
+trap cleanup EXIT ERR INT TERM HUP QUIT PIPE
 
 ! [ -n "${netset_file_input}" ] && {
     echo "[ERROR] [optimizer] Input netset file is not defined." >&2
