@@ -26,7 +26,7 @@ update_blacklist:
       else
         git add blacklist.lst
         git commit -m "🤖 [${CI_PIPELINE_ID}]-[${CI_JOB_ID}] Update aggregated blacklist $(date -u +'%Y-%m-%d %H:%M:%S')"
-        git push -o ci.skip
+        git push --set-upstream origin main -o ci.skip
       fi
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
