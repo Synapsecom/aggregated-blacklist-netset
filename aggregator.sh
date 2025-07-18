@@ -40,7 +40,7 @@ for name in "${!private_sources[@]}"; do
     echo "[INFO] [aggregator] Fetching private source '${name}' .."
     chunk=$(
         curl -fsSL --retry 3 --connect-timeout 5 --max-time 30 \
-            -H 'PRIVATE-TOKEN: ${GIT_API_TOKEN}'
+            -H 'PRIVATE-TOKEN: ${GIT_API_TOKEN}' \
             -H "Accept: text/plain" \
             -H "Content-Type: text/plain" \
             -H "User-Agent: curl / github.com/Synapsecom/aggregated-blacklist-netset" \
