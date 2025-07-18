@@ -51,8 +51,13 @@ for name in "${!private_sources[@]}"; do
         continue
     }
 
+    grep -q "csrf-token" <<< "${chunk}" && {
+        echo "[ERROR] [aggregator] Cannot fetch private source '${name}': ${chunk}" >&2
+        continue
+    }
+
     # Append data to netset output file
-    echo "${chunk}" | tee -a "${netset_file_temp}"
+    echo "${chunk}" | "${netset_file_temp}"
 done
 
 for name in "${!public_sources[@]}"; do
