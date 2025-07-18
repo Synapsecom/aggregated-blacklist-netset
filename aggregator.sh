@@ -41,9 +41,6 @@ for name in "${!private_sources[@]}"; do
     chunk=$(
         curl -fsSL --retry 3 --connect-timeout 5 --max-time 30 \
             -H 'PRIVATE-TOKEN: ${GIT_API_TOKEN}' \
-            -H "Accept: text/plain" \
-            -H "Content-Type: text/plain" \
-            -H "User-Agent: curl / github.com/Synapsecom/aggregated-blacklist-netset" \
             "${url}"
     ) || {
         # Variable "chunk" now contains curl's error message because -sS leaves it on stderr
