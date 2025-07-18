@@ -7,7 +7,7 @@ declare -r s_dir="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 declare -r netset_file_temp="$(mktemp)"
 declare -r netset_file_output="${s_dir}/blacklist.lst"
 declare -Ar private_sources=(
-    ["whmcs-bots"]='LS0tLS1CRUdJTiBBR0UgRU5DUllQVEVEIEZJTEUtLS0tLQpZV2RsTFdWdVkzSjVjSFJwYjI0dWIzSm5MM1l4Q2kwK0lGZ3lOVFV4T1NCWE1FZzRTVzAzTkc1ck5tczFaSGN5ClJWUndUM2cwWjFNNU1UUnhNM2hQV0doR1RUbFZZbTVPTld0WkNrVkhaMWd4Y1VNMFF6TmhURk0yVldadFowVlkKUTFSa1oxQkxkbUpHYzBoT00xZDRVR0V4UTFCSE9FRUtMUzB0SUdWUVMycDJibm94UTFaV2RTOVZVMnh4Y0UwNQpVVmh0UlRSTlpHTXhhbFY2Ynl0SFNYZHhkREJ1VlVFS1hKclVyL1N1bmtXQUtsZTVkek9PRFBBMW82c2ZnYTNyClFTMGZNWUY3MFlVR1VwUmVpUW5RcEx4MlNBTDI4MFE1U1dWdlQ4WDVlVldKWUowZnd2OE1GZ2VUSFVIbk5LclQKMFpOT1ZZSUtzUUZTVmxyMHlHY05hbTIrR0NreTY3RGpaNXNVZG9ObWxxQ2dqNk0xRmdzakVhUldZRUxQRGw1Vwo0UTRDSmtFV1FVUVhVMFEwUjVBY1RBPT0KLS0tLS1FTkQgQUdFIEVOQ1JZUFRFRCBGSUxFLS0tLS0K'
+    ["whmcs-bots"]='LS0tLS1CRUdJTiBBR0UgRU5DUllQVEVEIEZJTEUtLS0tLQpZV2RsTFdWdVkzSjVjSFJwYjI0dWIzSm5MM1l4Q2kwK0lGZ3lOVFV4T1NCSk1qZEhWa1pHTVhWaFJ6UlZOV0ZFCmN5OWxNQzl4TmtoWWFrNXpSR2RWYUdSSlMyOHZTM2hTY0ROTkNuWnpRMjlSVDFoWFdUQmpObE5oVEhwTVJFOVYKTTJWRWQwbHlXREJ6Y0ZsTE1XUktWVU5PTldKb1kyTUtMUzB0SUhKa1FUQkZUMUpLWlhORVZteERhMjFsWWtzNApWbnAwUTIweFZXYzVLM05tYlU5UVdUZzRXRGRKWjBFS1Bha014V0hPRmNhVXRFbWoxaTVsb1pNYytnalVWTklyCmUxYlpMdkoranl2U2xOQnZkb1BoZjdFUGpuaFhXRmEyeVhJc0UybjlMRFZJRjVjRDZnQnpXL3RBWkZVR1Zaa2sKNmMwVi9HSDNaOWx4WFJLcXVZTzFmNlNuczE4RGhGYVpGK0RuTEJEbWZDZkMrSWFKMkRlYTFRNFYzT0hZSHlPYwotLS0tLUVORCBBR0UgRU5DUllQVEVEIEZJTEUtLS0tLQo='
 )
 declare -Ar public_sources=(
     ["firehol-level1"]="https://github.com/firehol/blocklist-ipsets/raw/refs/heads/master/firehol_level1.netset"
@@ -40,7 +40,7 @@ for name in "${!private_sources[@]}"; do
     echo "[INFO] [aggregator] Fetching private source '${name}' .."
     chunk=$(
         curl -fsSL --retry 3 --connect-timeout 5 --max-time 30 \
-            -u "ci:${CI_JOB_TOKEN}" \
+            -H 'PRIVATE-TOKEN: ${GIT_API_TOKEN}'
             -H "Accept: text/plain" \
             -H "Content-Type: text/plain" \
             -H "User-Agent: curl / github.com/Synapsecom/aggregated-blacklist-netset" \
@@ -57,7 +57,7 @@ for name in "${!private_sources[@]}"; do
     }
 
     # Append data to netset output file
-    echo "${chunk}" | "${netset_file_temp}"
+    echo "${chunk}" >> "${netset_file_temp}"
 done
 
 for name in "${!public_sources[@]}"; do

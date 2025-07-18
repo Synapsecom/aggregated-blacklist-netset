@@ -1,5 +1,6 @@
 ---
-# Needs AGE_PRIVATE_KEY_FILE CI variable (path to age identity private key file)
+# Needs AGE_PRIVATE_KEY_FILE env variable (path to age identity private key file)
+# Needs GIT_API_TOKEN env variable
 
 stages:
   - update
