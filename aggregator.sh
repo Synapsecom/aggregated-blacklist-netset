@@ -52,7 +52,7 @@ for name in "${!private_sources[@]}"; do
     }
 
     # Append data to netset output file
-    echo "${chunk}" >> "${netset_file_temp}"
+    echo "${chunk}" | tee -a "${netset_file_temp}"
 done
 
 for name in "${!public_sources[@]}"; do
