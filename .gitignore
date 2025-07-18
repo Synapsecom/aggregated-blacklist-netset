@@ -1,5 +1,6 @@
 # Custom
 debug.lst
+age.key
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

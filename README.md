@@ -2,14 +2,10 @@
 
 Aggregated blacklist from different providers in a single netset, refreshed every 30 minutes.
 
-## Sources
+## Private Sources
 
-* [firehol-level1](https://github.com/firehol/blocklist-ipsets/raw/refs/heads/master/firehol_level1.netset)
+Gathered from honeypots, automation tools and logs.
 
-* [firehol-spamhaus-drop](https://github.com/firehol/blocklist-ipsets/raw/refs/heads/master/spamhaus_drop.netset)
+## Public Sources
 
-* [emergingthreats-compromised-ips](https://rules.emergingthreats.net/blockrules/compromised-ips.txt)
-
-* [cinsscore-ci-badguys](http://cinsscore.com/list/ci-badguys.txt)
-
-* [blocklist-de-all](https://lists.blocklist.de/lists/all.txt)
+Trusted and reliable ipsets and netsets from Firehol, EmergingThreats, cinsscore, hagezi and others.

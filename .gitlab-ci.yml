@@ -1,9 +1,8 @@
 ---
+# Needs AGE_PRIVATE_KEY_FILE CI variable (path to age identity private key file)
+
 stages:
   - update
-
-variables:
-  DEBIAN_FRONTEND: noninteractive
 
 update_blacklist:
   stage: update
