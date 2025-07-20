@@ -16,6 +16,11 @@ declare -Ar public_sources=(
     ["cinsscore-ci-badguys"]="http://cinsscore.com/list/ci-badguys.txt"
     ["blocklist-de-all"]="https://lists.blocklist.de/lists/all.txt"
     ["hagezi-threat-intelligence-feeds"]="https://raw.githubusercontent.com/hagezi/dns-blocklists/main/ips/tif.txt"
+    ["binary-defense-banlist"]="https://www.binarydefense.com/banlist.txt"
+    ["daniel-gerzo-bruteforce"]="https://danger.rulez.sk/projects/bruteforceblocker/blist.php"
+    ["botvrij"]="http://www.botvrij.eu/data/ioclist.ip-dst.raw"
+    ["greensnow"]="https://blocklist.greensnow.co/greensnow.txt"
+    ["rutgers"]="https://report.cs.rutgers.edu/DROP/attackers"
 )
 
 function cleanup() {
