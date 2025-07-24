@@ -20,9 +20,5 @@ update_blacklist:
         git commit -m "🤖 [${CI_PIPELINE_ID}]-[${CI_JOB_ID}] Update aggregated blacklist $(date -u +'%Y-%m-%d %H:%M:%S')"
         git push "https://${GIT_REPO_TOKEN_NAME}:${GIT_REPO_TOKEN_VALUE}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" HEAD:$CI_COMMIT_REF_NAME -o ci.skip
       fi
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule"
-      when: on_success
-    - when: manual
   only:
     - main
