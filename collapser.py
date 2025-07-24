@@ -13,6 +13,16 @@ If -o/--output is omitted, writes to STDOUT.
 Lines that don't contain an IP/CIDR token are ignored.
 """
 
+import os
+import sentry_sdk
+
+sentry_sdk.init(
+    os.getenv("SENTRY_DSN"),
+    send_default_pii=True,
+    max_request_body_size="always",
+    traces_sample_rate=0.33,
+)
+
 import re
 import sys
 import ipaddress
