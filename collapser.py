@@ -11,6 +11,7 @@ If -i/--input is omitted, reads from STDIN.
 If -o/--output is omitted, writes to STDOUT.
 
 Lines that don't contain an IP/CIDR token are ignored.
+Needs os package: python3-sentry-sdk
 """
 
 import os
@@ -19,7 +20,7 @@ import sentry_sdk
 sentry_sdk.init(
     os.getenv("SENTRY_DSN"),
     send_default_pii=True,
-    max_request_body_size="always",
+    # max_request_body_size="always",
     traces_sample_rate=0.33,
 )
 
