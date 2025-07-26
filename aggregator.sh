@@ -21,6 +21,7 @@ declare -Ar public_sources=(
     ["botvrij"]="http://www.botvrij.eu/data/ioclist.ip-dst.raw"
     ["greensnow"]="https://blocklist.greensnow.co/greensnow.txt"
     ["rutgers"]="https://report.cs.rutgers.edu/DROP/attackers"
+    ["dan-torlist"]="https://www.dan.me.uk/torlist/"
 )
 
 function cleanup() {
