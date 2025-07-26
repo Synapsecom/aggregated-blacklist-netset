@@ -22,6 +22,7 @@ declare -Ar public_sources=(
     ["greensnow"]="https://blocklist.greensnow.co/greensnow.txt"
     ["rutgers"]="https://report.cs.rutgers.edu/DROP/attackers"
     ["threatview"]="https://threatview.io/Downloads/IP-High-Confidence-Feed.txt"
+    ["nuug-pop3-gropers"]="https://home.nuug.no/~peter/pop3gropers.txt"
     ["dan-torlist"]="https://www.dan.me.uk/torlist/"
 )
 
