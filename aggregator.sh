@@ -21,6 +21,7 @@ declare -Ar public_sources=(
     ["botvrij"]="http://www.botvrij.eu/data/ioclist.ip-dst.raw"
     ["greensnow"]="https://blocklist.greensnow.co/greensnow.txt"
     ["rutgers"]="https://report.cs.rutgers.edu/DROP/attackers"
+    ["threatview"]="https://threatview.io/Downloads/IP-High-Confidence-Feed.txt"
     ["dan-torlist"]="https://www.dan.me.uk/torlist/"
 )
 
