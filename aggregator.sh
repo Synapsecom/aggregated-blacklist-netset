@@ -23,11 +23,11 @@ declare -Ar public_sources=(
     ["rutgers"]="https://report.cs.rutgers.edu/DROP/attackers"
     ["threatview"]="https://threatview.io/Downloads/IP-High-Confidence-Feed.txt"
     ["nuug-pop3-gropers"]="https://home.nuug.no/~peter/pop3gropers.txt"
-    ["mirai-security-gives"]="https://mirai.security.gives/data/ip_list.txt"
+    ## ["mirai-security-gives"]="https://mirai.security.gives/data/ip_list.txt"
     ["ipsum-level-6"]="https://raw.githubusercontent.com/stamparm/ipsum/master/levels/6.txt"
     ["ipsum-level-7"]="https://raw.githubusercontent.com/stamparm/ipsum/master/levels/7.txt"
     ["ipsum-level-8"]="https://raw.githubusercontent.com/stamparm/ipsum/master/levels/8.txt"
-    ["dan-torlist"]="https://www.dan.me.uk/torlist/"
+    ## ["dan-torlist"]="https://www.dan.me.uk/torlist/"
 )
 
 function cleanup() {
